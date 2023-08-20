@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel
+</head>
+    <input id="name" placeholder="write your name">
+    <br>
+    <input id="message"></input>
+    <button id="b1">send</button>
+    <div id="container"></div>
+    <script>
+        const button = document.getElementById('b1');
+        const message = document.getElementById('message');
+        const container = document.getElementById('container');
+        const name = document.getElementById('name');
+        button.onclick = () => {
+            let value = message.value;
+            console.log(value);
+            fetch("http://localhost:3001/send/" + (name.value !== "" ? (name.value + ":") : "") + message.value);
+        }
+        setInterval(()=>{
+            fetch("http://localhost:3001/get").then((res)=>{
+                return res.json();
+            }).then((jsonData)=>{
+                console.log(jsonData);
+                let chat = jsonData.chat;
+                container.innerHTML = chat;
+            })
+        }, 1000);
+        console.log();
+    </script>
+</body>
+</html>
